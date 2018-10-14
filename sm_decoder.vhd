@@ -7,24 +7,27 @@ entity sm_decoder is
            A : in  STD_LOGIC;
            B : in  STD_LOGIC;
            S1 : out  STD_LOGIC;
-           S2 : out  STD_LOGIC);
+           S2 : out  STD_LOGIC;
+			  ISTATE: out  std_logic_vector(2 downto 0) 
+			  );
 end sm_decoder;
 
 architecture sm_decoder_impl of sm_decoder is
 	
-	-- STATE ENCODINGS                             S1,S2,_,_
-	constant STATE1 : std_logic_vector(3 downto 0) := "0000";
-	constant STATE2 : std_logic_vector(3 downto 0) := "0100";
-	constant STATE3 : std_logic_vector(3 downto 0) := "0001";
-	constant STATE4 : std_logic_vector(3 downto 0) := "0011";
-	constant STATE5 : std_logic_vector(3 downto 0) := "1000";
+	-- STATE ENCODINGS                                         
+	constant STATE1 : std_logic_vector(4 downto 0) := "001" & "00";
+	constant STATE2 : std_logic_vector(4 downto 0) := "010" & "00";
+	constant STATE3 : std_logic_vector(4 downto 0) := "011" & "01";
+	constant STATE4 : std_logic_vector(4 downto 0) := "100" & "11";
+	constant STATE5 : std_logic_vector(4 downto 0) := "101" & "00";
 	
-	signal CUR_STATE : std_logic_vector(3 downto 0);
+	signal CUR_STATE : std_logic_vector(4 downto 0);
 begin
 
 -- Hard wires
 S1 <= CUR_STATE(0);
 S2 <= CUR_STATE(1);
+ISTATE <= CUR_STATE(4 downto 2);
 
 FSM: PROCESS(CLK,RESET)
 begin
