@@ -3,11 +3,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity seg_driver is
     Port ( BCD : in  STD_LOGIC_VECTOR (3 downto 0);
-           LED_out : out  STD_LOGIC_VECTOR (6 downto 0));
+           LED_out : out  STD_LOGIC_VECTOR (6 downto 0);
+			  AN  : out STD_LOGIC_VECTOR (7 downto 0)
+			);
 end seg_driver;
 
 architecture seg_driver_impl of seg_driver is
 begin
+ 
+ AN <= "11111110";
+
  DRIVER: process(BCD)
  begin
 	case BCD is

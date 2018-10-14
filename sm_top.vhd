@@ -18,7 +18,8 @@ end COMPONENT;
 
 COMPONENT seg_driver is
     Port ( BCD : in  STD_LOGIC_VECTOR (3 downto 0);
-           LED_out : out  STD_LOGIC_VECTOR (6 downto 0));
+           LED_out : out  STD_LOGIC_VECTOR (6 downto 0);
+			  AN  : out STD_LOGIC_VECTOR (7 downto 0) );
 end COMPONENT;
 
 --- IMPORTS END ---
@@ -34,11 +35,10 @@ LED_DRIVER <= SW;
 -- 7 Segment display
 BCD_in(3) <= '0';	
 BCD_in(2 downto 0) <= LED_DRIVER;	
-AN <= "11111110";
 
 	
 LEDDRIVER: demux_3to5 PORT MAP(DIN=>LED_DRIVER, DOUT=>LED);
-SEGDRIVER: seg_driver PORT MAP(BCD=>BCD_in, LED_out=>SEG);
+SEGDRIVER: seg_driver PORT MAP(BCD=>BCD_in, LED_out=>SEG, AN=>AN);
 	
 end sm_top_impl;
 
