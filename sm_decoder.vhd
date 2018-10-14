@@ -4,6 +4,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity sm_decoder is
     Port ( CLK : in  STD_LOGIC;
            RESET : in  STD_LOGIC;
+			  EN : IN std_logic;
            A : in  STD_LOGIC;
            B : in  STD_LOGIC;
            S1 : out  STD_LOGIC;
@@ -29,46 +30,48 @@ S1 <= CUR_STATE(0);
 S2 <= CUR_STATE(1);
 ISTATE <= CUR_STATE(4 downto 2);
 
-FSM: PROCESS(CLK,RESET)
+FSM: PROCESS(CLK,RESET,EN)
 begin
 	if (RESET ='1') then CUR_STATE <= STATE1;
 	elsif rising_edge(CLK) then
-		case CUR_STATE is
-			when STATE1 => 
-				if ( (A='1') and (B='0') ) then
-					CUR_STATE <= STATE2;
-				else 
+		if (EN='1') then
+			case CUR_STATE is
+				when STATE1 => 
+					if ( (A='1') and (B='0') ) then
+						CUR_STATE <= STATE2;
+					else 
+						CUR_STATE <= STATE1;
+					end if;
+				when STATE2 => 
+					if ( (A='0') and (B='1') ) then
+						CUR_STATE <= STATE4;
+					elsif ( (A='0') and (B='0') ) then
+						CUR_STATE <= STATE3;
+					else
+						CUR_STATE <= STATE2;
+					end if;
+				when STATE3 => 
+					if ( (A='1') and (B='0') ) then
+						CUR_STATE <= STATE2;
+					elsif ( (A='1') and (B='1') ) then
+						CUR_STATE <= STATE1;
+					elsif ( (A='0') and (B='1') ) then
+						CUR_STATE <= STATE5;
+					else
+						CUR_STATE <= STATE3;
+					end if;
+				when STATE4 =>
+					if ( (A='0') and (B='0') ) then
+						CUR_STATE <= STATE5;
+					else
+						CUR_STATE <= STATE4;
+					end if;
+				when STATE5 => 
 					CUR_STATE <= STATE1;
-				end if;
-			when STATE2 => 
-				if ( (A='0') and (B='1') ) then
-					CUR_STATE <= STATE4;
-				elsif ( (A='0') and (B='0') ) then
-					CUR_STATE <= STATE3;
-				else
-					CUR_STATE <= STATE2;
-				end if;
-			when STATE3 => 
-				if ( (A='1') and (B='0') ) then
-					CUR_STATE <= STATE2;
-				elsif ( (A='1') and (B='1') ) then
+				when OTHERS => 
 					CUR_STATE <= STATE1;
-				elsif ( (A='0') and (B='1') ) then
-					CUR_STATE <= STATE5;
-				else
-					CUR_STATE <= STATE3;
-				end if;
-			when STATE4 =>
-				if ( (A='0') and (B='0') ) then
-					CUR_STATE <= STATE5;
-				else
-					CUR_STATE <= STATE4;
-				end if;
-			when STATE5 => 
-				CUR_STATE <= STATE1;
-			when OTHERS => 
-				CUR_STATE <= STATE1;
-		end case;
+			end case;
+		end if;
 	end if;
 end process FSM;
 
