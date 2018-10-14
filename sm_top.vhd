@@ -25,14 +25,19 @@ end COMPONENT;
 
 -- SIGNALS --
 	signal BCD_in :  STD_LOGIC_VECTOR (3 downto 0);
+	signal LED_DRIVER: STD_LOGIC_VECTOR (2 downto 0);
 begin
 	
-BCD_in(3) <= '0';	
-BCD_in(2 downto 0) <= SW;	
-
-AN <= "11111110";
+-- Connect inputs to signals for easy rerouting
+LED_DRIVER <= SW;
 	
-LEDDRIVER: demux_3to5 PORT MAP(DIN=>SW, DOUT=>LED);
+-- 7 Segment display
+BCD_in(3) <= '0';	
+BCD_in(2 downto 0) <= LED_DRIVER;	
+AN <= "11111110";
+
+	
+LEDDRIVER: demux_3to5 PORT MAP(DIN=>LED_DRIVER, DOUT=>LED);
 SEGDRIVER: seg_driver PORT MAP(BCD=>BCD_in, LED_out=>SEG);
 	
 end sm_top_impl;
