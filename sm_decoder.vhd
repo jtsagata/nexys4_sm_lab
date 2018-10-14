@@ -53,6 +53,8 @@ begin
 					CUR_STATE <= STATE2;
 				elsif ( (A='1') and (B='1') ) then
 					CUR_STATE <= STATE1;
+				elsif ( (A='0') and (B='1') ) then
+					CUR_STATE <= STATE5;
 				else
 					CUR_STATE <= STATE3;
 				end if;
@@ -65,7 +67,7 @@ begin
 			when STATE5 => 
 				CUR_STATE <= STATE1;
 			when OTHERS => 
-				CUR_STATE <= STATE4;
+				CUR_STATE <= STATE1;
 		end case;
 	end if;
 end process FSM;
