@@ -1,0 +1,26 @@
+digraph finite_state_machine {
+    rankdir=TB;
+    size="8,5"
+    // bgcolor="transparent";
+
+    node [shape = point ]; 
+    qi    [xlabel="Power On"]; 
+    qback [xlabel="STATE1"];
+
+    node [shape = record];
+    STATE1 [label="{STATE1 | { S1=0 | S2=0 } }", color="red"]
+    STATE2 [label="{STATE2 | { S1=0 | S2=0 } }", color="red"]
+    STATE3 [label="{STATE3 | { S1=1 | S2=0 } }", color="green"]
+    STATE4 [label="{STATE4 | { S1=1 | S2=1 } }", color="blue"]
+    STATE5 [label="{STATE5 | { S1=0 | S2=0 } }", color="red"]
+    
+qi -> STATE1 [label = "RESET"];
+    STATE1  -> STATE2 [ label = "a=1 & b=0" , color="red"];
+    STATE2  -> STATE3 [ label = "a=0 & b=0" , color="sienna" ];
+    STATE3  -> STATE2 [ label = "a=1 & b=0" , color="gold"];
+    STATE3  -> STATE1 [ label = "a=1 & b=1" , color="indigo"];
+    STATE2  -> STATE4 [ label = "a=0 & b=1" , color="green"];
+    STATE3  -> STATE5 [ label = "a=0 & b=1" , color="green"];
+    STATE4  -> STATE5 [ label = "a=0 & b=1" , color="green"];
+    STATE5  -> qback;
+}
