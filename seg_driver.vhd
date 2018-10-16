@@ -17,7 +17,7 @@ begin
  begin
 	case BCD is
     --                        "GFEDCBA" 	                       
-	 -- when "0000" => LED_out <= "0000000"; -- "0"     
+	 when "0000" => LED_out <= "0000001"; -- "0"     
     when "0001" => LED_out <= "1111001"; -- "1" 
     when "0010" => LED_out <= "0100100"; -- "2" 
     when "0011" => LED_out <= "0110000"; -- "3" 

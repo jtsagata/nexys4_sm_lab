@@ -1,7 +1,7 @@
 digraph finite_state_machine {
     rankdir=TB;
     size="8,5"
-    // bgcolor="transparent";
+    bgcolor="transparent";
 
     node [shape = point ]; 
     qi    [xlabel="Power On"]; 
@@ -14,7 +14,7 @@ digraph finite_state_machine {
     STATE4 [label="{STATE4 | { S1=1 | S2=1 } }", color="blue"]
     STATE5 [label="{STATE5 | { S1=0 | S2=0 } }", color="red"]
     
-qi -> STATE1 [label = "RESET"];
+    qi -> STATE1 [label = "RESET"];
     STATE1  -> STATE2 [ label = "a=1 & b=0" , color="red"];
     STATE2  -> STATE3 [ label = "a=0 & b=0" , color="sienna" ];
     STATE3  -> STATE2 [ label = "a=1 & b=0" , color="gold"];
